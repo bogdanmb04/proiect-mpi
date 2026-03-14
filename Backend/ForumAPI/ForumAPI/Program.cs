@@ -1,3 +1,8 @@
+using ForumAPI.DataContext;
+using ForumAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +24,13 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("ForumContext"));
+dataSourceBuilder.MapEnum<Role>("role");
+var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddDbContext<ForumContext>(options
+    => options.UseNpgsql(dataSource, o => o.MapEnum<Role>("role")));
 
 var app = builder.Build();
 
