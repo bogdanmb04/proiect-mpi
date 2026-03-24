@@ -1,7 +1,12 @@
 using ForumAPI.DataContext;
+using ForumAPI.Handlers;
 using ForumAPI.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
+using System.Text;
 
 // --------- BUILDER SETTINGS ----------
 
@@ -31,11 +36,71 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
+#region JWT Config
+
 builder.Services.Configure<JWTSettings>(options =>
 {
     options.SecretKey = builder.Configuration["JwtSettings:SecretKey"]
         ?? throw new InvalidOperationException("JWT Secret Key is not configured");
 });
+
+var jwtSection = builder.Configuration.GetSection("JWTSettings");
+builder.Services.Configure<JWTSettings>(jwtSection);
+
+var appSettings = jwtSection.Get<JWTSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings!.SecretKey);
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = builder.Environment.IsProduction();
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (string.IsNullOrEmpty(context.Token))
+                {
+                    context.Token = context.Request.Cookies["accessToken"];
+                }
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireClaim("role", "ADMIN"));
+
+    options.AddPolicy("UserOrAdmin", policy =>
+        policy.RequireClaim("role", "USER", "ADMIN"));
+
+    options.AddPolicy("BasicAuth", policy =>
+        policy.AddAuthenticationSchemes("BasicAuthentication")
+              .RequireAuthenticatedUser());
+
+    options.AddPolicy("JwtAuth", policy =>
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+              .RequireAuthenticatedUser());
+});
+
+#endregion
 
 #region Database Settings
 

@@ -21,6 +21,7 @@ namespace ForumAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ForumUsersController(ForumContext context, IOptions<JWTSettings> jwtSettings) : ControllerBase
     {
         private readonly ForumContext _context = context;
