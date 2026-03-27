@@ -38,6 +38,13 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "browsers": "ChromeHeadless"
+          }
+        },
         "build": {
           "builder": "@angular/build:application",
           "options": {
