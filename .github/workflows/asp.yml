@@ -19,13 +19,13 @@ jobs:
           dotnet-version: 10.0.x
 
       - name: Restore dependencies
-        working-directory: /Backend/ForumAPI/ForumAPI
+        working-directory: Backend/ForumAPI/ForumAPI
         run: dotnet restore ForumAPI.csproj
 
       - name: Build
-        working-directory: /Backend/ForumAPI/ForumAPI
+        working-directory: Backend/ForumAPI/ForumAPI
         run: dotnet build ForumAPI.csproj --no-restore
 
       - name: Test
-        working-directory: /Backend/ForumAPI/ForumAPI
+        working-directory: Backend/ForumAPI/ForumAPI
         run: dotnet test ForumAPI.csproj --no-build --verbosity normal
