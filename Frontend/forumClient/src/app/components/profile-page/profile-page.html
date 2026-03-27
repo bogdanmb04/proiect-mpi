@@ -1,0 +1,8 @@
+<div class="profile-page-container">
+  <aside class="profile-sidebar">
+    <app-profile [user]="user()" />
+  </aside>
+  <main class="posts-section">
+    <app-post-stream [posts]="userPosts()" />
+  </main>
+</div>

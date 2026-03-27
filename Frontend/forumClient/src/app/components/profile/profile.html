@@ -1,0 +1,34 @@
+<div class="profile-container">
+  @if (user(); as userProfile) {
+  <div class="profile-card">
+    @if (isOwnProfile()) {
+    <a [routerLink]="'/profile/' + userProfile.id + '/edit'" class="edit-button">Edit Profile</a>
+    } @else {
+    <button class="follow-button" (click)="toggleFollow(userProfile.id)">
+      {{ isFollowing() ? 'Unfollow' : 'Follow' }}
+    </button>
+    }
+    <div class="profile-header">
+      <div class="profile-icon">
+        @if (userProfile.icon) {
+        <img [src]="'data:image/png;base64,' + userProfile.icon" alt="User icon" />
+        } @else {
+        <div class="default-icon">{{ userProfile.username.charAt(0).toUpperCase() }}</div>
+        }
+      </div>
+      <div class="profile-info">
+        <h1 class="username">{{ userProfile.username }}</h1>
+        <p class="description" [class.empty]="!userProfile.description">
+          {{ userProfile.description || 'No description yet.' }}
+        </p>
+        <div class="counts">
+          <span>{{ userProfile.followerCount ?? 0 }} followers | </span>
+          <span>{{ userProfile.followingCount ?? 0 }} following</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="loading">Loading profile...</div>
+  }
+</div>
