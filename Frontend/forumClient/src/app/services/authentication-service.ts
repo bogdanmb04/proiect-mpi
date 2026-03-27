@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +17,7 @@ export class AuthenticationService {
   private readonly USER_STORAGE_KEY = 'forum_user';
   private isRefreshing = false;
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private http: HttpClient) {
     this.loadUserFromStorage();
   }

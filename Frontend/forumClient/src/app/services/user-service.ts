@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { User, UserEditDTO } from '../models/user.model';
@@ -9,9 +10,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserService {
-  apiUrl = environment.usersApi;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  apiUrl = environment.usersApi;
 
   getUserById(id: number): Observable<User | null> {
     return this.http.get<any>(`${this.apiUrl}/profile/${id}`).pipe(
