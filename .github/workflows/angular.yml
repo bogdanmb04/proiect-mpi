@@ -14,24 +14,24 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        working-directory: ../../Frontend/forumClient
+        working-directory: /Frontend/forumClient
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
           cache: "npm"
 
       - name: Install dependencies
-        working-directory: ../../Frontend/forumClient
+        working-directory: /Frontend/forumClient
         run: npm ci
 
       - name: Lint
-        working-directory: ../../Frontend/forumClient
+        working-directory: /Frontend/forumClient
         run: npx ng lint
 
       - name: Test
-        working-directory: ../../Frontend/forumClient
+        working-directory: /Frontend/forumClient
         run: npx ng test --watch=false --browsers=ChromeHeadless
 
       - name: Build
-        working-directory: ../../Frontend/forumClient
+        working-directory: /Frontend/forumClient
         run: npx ng build --configuration production
