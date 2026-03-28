@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { RegisterDTO } from '../models/register.model';
@@ -15,8 +15,9 @@ export class AuthenticationService {
   user: User | null = null;
   private readonly USER_STORAGE_KEY = 'forum_user';
   private isRefreshing = false;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadUserFromStorage();
   }
 
@@ -85,7 +86,7 @@ export class AuthenticationService {
         return true;
       }
       return false;
-    } catch (error) {
+    } catch (_error) {
       console.log('Session restore failed, user needs to login');
       return false;
     } finally {
@@ -116,7 +117,7 @@ export class AuthenticationService {
         return true;
       }
       return false;
-    } catch (error) {
+    } catch (_error) {
       this.logout();
       return false;
     } finally {

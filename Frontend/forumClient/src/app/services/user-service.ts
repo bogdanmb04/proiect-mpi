@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { User, UserEditDTO } from '../models/user.model';
@@ -10,11 +10,10 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
   apiUrl = environment.usersApi;
-
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   getUserById(id: number): Observable<User | null> {
-    return this.http.get<any>(`${this.apiUrl}/profile/${id}`).pipe(
+    return this.http.get<User>(`${this.apiUrl}/profile/${id}`).pipe(
       map(response => {
         if (!response) return null;
         return {

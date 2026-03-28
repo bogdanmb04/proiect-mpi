@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
 import { map } from 'rxjs/operators';
@@ -10,8 +10,7 @@ import { MakePostDTO } from '../models/make-post.model';
 })
 export class PostsService {
   private api = environment.postsApi;
-
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   getPosts() {
     return this.http.get<{ posts: PostDTO[] }>(`${this.api}`).pipe(
