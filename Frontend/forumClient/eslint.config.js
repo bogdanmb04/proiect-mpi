@@ -15,6 +15,12 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      /* Language-specific linting */
+      "semi": ["error", "always"],
+      "indent": ["error", 2],
+      "quotes": ["error", "single"],
+      "no-trailing-spaces": "error",
+
       /* Typescript-specific linting */
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -24,12 +30,8 @@ module.exports = defineConfig([
           caughtErrorsIgnorePattern: "^_"
         }
       ],
-      "semi": ["error", "always"],
-      "indent": ["error", 2],
-      "quotes": ["error", "single"],
       "@typescript-eslint/no-inferrable-types": "warn",
       "@typescript-eslint/no-explicit-any": "error",
-      "no-trailing-spaces": "error",
 
       /* Angular-specific linting */
       "@angular-eslint/directive-selector": [
