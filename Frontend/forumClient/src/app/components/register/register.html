@@ -1,0 +1,44 @@
+<div class="auth-shell">
+  <div class="card">
+    <h1>Create account</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+      <label class="field">
+        <span>Username</span>
+        <input id="username" formControlName="username" placeholder="your_username" />
+        @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
+        <small>Username must be at least 3 characters.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input id="email" formControlName="email" placeholder="you@example.com" />
+        @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+        <small>Enter a valid email address.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Password</span>
+        <input id="password" type="password" formControlName="password" />
+        @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+        <small>Password must be at least 6 characters.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Confirm password</span>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+        @if (registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid) {
+        <small>Passwords must match.</small>
+        }
+      </label>
+
+      @if (errorMessage.length > 0) {
+      <div class="alert">{{ errorMessage }}</div>
+      }
+
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+    </form>
+  </div>
+</div>
