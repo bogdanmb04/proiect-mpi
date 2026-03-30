@@ -10,7 +10,7 @@ describe('PostStream', () => {
     await TestBed.configureTestingModule({
       imports: [PostStream]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PostStream);
     component = fixture.componentInstance;
