@@ -1,0 +1,22 @@
+<header class="topbar">
+  <div class="topbar-container">
+    <div class="logo">Super Forum :3</div>
+    <nav class="nav">
+      <a routerLink="/">Home</a>
+      @if (authService.user === null) {
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+      }
+      @else {
+      <div class="user-section">
+        @if (authService.user.icon) {
+        <img [src]="'data:image/png;base64,' + authService.user.icon" alt="{{ authService.user.username }}"
+          class="user-icon" />
+        }
+        <a [routerLink]="'/profile/' + authService.user.id">{{ authService.user.username }}</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+      }
+    </nav>
+  </div>
+</header>
