@@ -19,13 +19,13 @@ export class Login {
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
-  })
+  });
 
   loginUser() {
     const data: LoginDTO = {
       username: this.loginForm.value.username || '',
       password: this.loginForm.value.password || ''
-    }
+    };
 
     this.authService.login(data).subscribe({
       next: (response) => {
