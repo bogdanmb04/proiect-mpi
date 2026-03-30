@@ -47,7 +47,8 @@
                 "glob": "**/*",
                 "input": "public"
               }
-            ]
+            ],
+            "browsers": "ChromeHeadless"
           }
         },
         "build": {
