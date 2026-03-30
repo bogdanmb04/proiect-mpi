@@ -42,7 +42,12 @@
           "builder": "@angular/build:karma",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "browsers": "ChromeHeadless"
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ]
           }
         },
         "build": {
