@@ -40,7 +40,7 @@ builder.Services.AddControllers();
 
 builder.Services.Configure<JWTSettings>(options =>
 {
-    options.SecretKey = builder.Configuration["JwtSettings:SecretKey"]
+    options.SecretKey = builder.Configuration["JWTSettings:SecretKey"]
         ?? throw new InvalidOperationException("JWT Secret Key is not configured");
 });
 
@@ -128,6 +128,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(angularCorsPolicy);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

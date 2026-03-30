@@ -1,4 +1,5 @@
 ﻿using ForumAPI.DataContext;
+using ForumAPI.DataTransferObject.PostDTO;
 using ForumAPI.DataTransferObject.UserDTO;
 using ForumAPI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -161,52 +162,52 @@ namespace ForumAPI.Controllers
             });
         }
 
-        //[HttpGet("profile/{id:long}/likes")]
-        //[AllowAnonymous]
-        //public async Task<ActionResult> GetForumUserLikes(long id)
-        //{
-        //    var userLikes = await _context.Forumusers
-        //        .Where(user => user.UserId == id)
-        //        .SelectMany(user => user.Forumlikes)
-        //        .ToListAsync();
+        [HttpGet("profile/{id:long}/likes")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetForumUserLikes(long id)
+        {
+            var userLikes = await _context.Forumusers
+                .Where(user => user.UserId == id)
+                .SelectMany(user => user.Forumlikes)
+                .ToListAsync();
 
-        //    if (userLikes.Count == 0)
-        //    {
-        //        return Ok(null);
-        //    }
+            if (userLikes.Count == 0)
+            {
+                return Ok(null);
+            }
 
-        //    List<Post> likedPosts = [];
+            List<Post> likedPosts = [];
 
-        //    foreach (var like in userLikes)
-        //    {
-        //        var post = await _context.Posts
-        //            .Where(p => p.PostId == like.PostId)
-        //            .FirstOrDefaultAsync();
-        //        if (post != null)
-        //        {
-        //            likedPosts.Add(post);
-        //        }
-        //    }
+            foreach (var like in userLikes)
+            {
+                var post = await _context.Posts
+                    .Where(p => p.PostId == like.PostId)
+                    .FirstOrDefaultAsync();
+                if (post != null)
+                {
+                    likedPosts.Add(post);
+                }
+            }
 
-        //    if (likedPosts.Count == 0)
-        //    {
-        //        return Ok(null);
-        //    }
+            if (likedPosts.Count == 0)
+            {
+                return Ok(null);
+            }
 
-        //    List<PostDTO> likedPostsDTO = [.. likedPosts.Select(post => new PostDTO
-        //    {
-        //        Id = post.PostId,
-        //        Title = post.Title,
-        //        Body = post.Body,
-        //        CreatedAt = post.Date ?? DateTime.MinValue,
-        //        Username = _context.Forumusers.Where(u => u.UserId == post.UserId).Select(u => u.Username).FirstOrDefault(),
-        //        UserIcon = _context.Forumusers.Where(u => u.UserId == post.UserId).Select(u => u.Icon != null ? Convert.ToBase64String(u.Icon) : null).FirstOrDefault(),
-        //        LikesNo = _context.Forumlikes.Count(l => l.PostId == post.PostId),
-        //        CommentsNo = _context.Posts.Count(p => p.ParentPostId == post.PostId),
-        //    })];
+            List<PostDTO> likedPostsDTO = [.. likedPosts.Select(post => new PostDTO
+            {
+                Id = post.PostId,
+                Title = post.Title,
+                Body = post.Body,
+                CreatedAt = post.Date ?? DateTime.MinValue,
+                Username = _context.Forumusers.Where(u => u.UserId == post.UserId).Select(u => u.Username).FirstOrDefault(),
+                UserIcon = _context.Forumusers.Where(u => u.UserId == post.UserId).Select(u => u.Icon != null ? Convert.ToBase64String(u.Icon) : null).FirstOrDefault(),
+                LikesNo = _context.Forumlikes.Count(l => l.PostId == post.PostId),
+                CommentsNo = _context.Posts.Count(p => p.ParentPostId == post.PostId),
+            })];
 
-        //    return Ok(likedPostsDTO);
-        //}
+            return Ok(likedPostsDTO);
+        }
 
         [HttpPost("register")]
         [AllowAnonymous]
