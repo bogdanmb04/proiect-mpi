@@ -1,3 +1,26 @@
+# Containers
+## Individual container setup (without Docker Compose)
+
+
+Build frontend production image using Dockerfile:
+```bash
+docker build -t forum-front-prod .
+```
+The Karma server might require you to have a CHROME_BIN environment variable set (basically have a Chromium browser installed on your system). This is not required
+
+Start the container
+```bash
+docker run -d -p [your desired port]:80 forum-front-prod
+```
+Remove `-d` to have the container attached to your terminal session. You can always reattach with `docker container attach [container name]`
+
+And your container now runs! Go to `http://localhost:[your desired port]` and you should see the app running. Of course, you should also have your backend running to get the full experience, for that checkout the README in Backend/ForumAPI/ForumAPI, or use Docker Compose to automate the process.
+
+To stop the container, run `docker container ps` and check for your container's name - say your container is named [beloved_noyce]. Run:
+```bash
+docker container stop beloved_noyce
+```
+
 # ForumClient
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
