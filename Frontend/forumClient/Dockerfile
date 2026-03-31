@@ -5,13 +5,13 @@ COPY package*.json ./
 RUN npm install
 
 # Runs tests
-FROM install-stage AS test-stage
+FROM start-stage AS test-stage
 COPY . .
 # "|| true" makes sure the image still builds without ChromeHeadless
-RUN npx ng test --watch=false || true
+RUN npx ng test --watch=false --browsers=ChromeHeadless || true
 
 # Builds the project
-FROM install-stage AS build-stage
+FROM start-stage AS build-stage
 COPY . .
 RUN npx ng build --configuration production
 
