@@ -1,24 +1,22 @@
+# Retrieves dependencies
 FROM node:22 AS start-stage
-WORKDIR /usr/src/app
-COPY . .
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
 
-# FROM node:22 AS test-stage
-# WORKDIR /usr/src/app
-# COPY --from=start-stage /usr/src/app .
-# RUN npx ng test --watch=false
+# Runs tests
+FROM install-stage AS test-stage
+COPY . .
+# "|| true" makes sure the image still builds without ChromeHeadless
+RUN npx ng test --watch=false || true
 
-FROM node:22 AS build-stage
-WORKDIR /usr/src/app
-# COPY --from=test-stage /usr/src/app .
-COPY --from=start-stage /usr/src/app .
-RUN npx ng build
+# Builds the project
+FROM install-stage AS build-stage
+COPY . .
+RUN npx ng build --configuration production
 
-
-FROM node:22 AS serve-stage
-WORKDIR /usr/src/app
-COPY --from=build-stage /usr/src/app .
-# FROM nginx:alpine
-# COPY --from=serve-stage /usr/src/app/dist /usr/share/nginx/html
-RUN npm install -g serve
-CMD ["serve", "dist/forumClient/browser"]
+# Serves the project using nginx
+FROM nginx:alpine AS serve-stage
+COPY --from=build-stage /app/dist/forumClient/browser /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
