@@ -1,0 +1,14 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  gap: 16px;
+}
+
+.composer,
+.stream {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}

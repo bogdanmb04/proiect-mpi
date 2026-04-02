@@ -1,0 +1,44 @@
+<div class="edit-profile-container">
+  <div class="edit-card">
+    <h1>Edit Profile</h1>
+
+    <form class="edit-form" (ngSubmit)="saveProfile()">
+      <div class="icon-section">
+        <div class="current-icon">
+          @if (getDisplayIcon()) {
+          <img [src]="'data:image/png;base64,' + getDisplayIcon()" alt="Profile icon" />
+          } @else {
+          <div class="default-icon">{{ username().charAt(0).toUpperCase() }}</div>
+          }
+        </div>
+        <label class="upload-button">
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+          Change Icon
+        </label>
+      </div>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" [ngModel]="username()" (ngModelChange)="username.set($event)" name="username"
+          placeholder="Your username" required />
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" [ngModel]="description()" (ngModelChange)="description.set($event)"
+          name="description" placeholder="Tell us about yourself..." rows="5"></textarea>
+      </div>
+
+      @if (errorMessage()) {
+      <div class="error">{{ errorMessage() }}</div>
+      }
+
+      <div class="actions">
+        <button type="button" class="cancel-button" (click)="cancel()">Cancel</button>
+        <button type="submit" class="save-button" [disabled]="isLoading()">
+          {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
