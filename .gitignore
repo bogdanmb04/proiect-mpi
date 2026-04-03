@@ -3,3 +3,4 @@
 ################################################################################
 
 /Backend/ForumAPI/ForumAPI/appsettings.Development.json
+.env
