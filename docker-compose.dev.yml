@@ -1,0 +1,49 @@
+services:
+  # database
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1q2w3e
+      POSTGRES_DB: forum
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # server
+  backend:
+      image: forum-back-dev
+      build:
+        context: ./Backend/ForumAPI/ForumAPI
+        dockerfile: dev.Dockerfile
+      volumes:
+        - ./Backend/ForumAPI/ForumAPI:/app
+      ports:
+        - "7151:8080"
+      container_name: forum-back-container
+      depends_on:
+        - database
+      environment:
+        ConnectionStrings__Default: "Host=database;Database=forum;Username=postgres;Password=1q2w3e;Pooling=True;"
+        JWTSettings__SecretKey: "86fbda2aae8013c4f1fef2e18c49b4b643bc2b30b72611edbc778fe822a22bdc"
+
+  # client
+  frontend:
+    image: forum-front-dev
+    build:
+      context: ./Frontend/forumClient
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./Frontend/forumClient:/app
+    ports:
+      - 4200:80
+    container_name: forum-front-container
+
+volumes:
+  database-data:
