@@ -21,6 +21,12 @@ To stop the container, run `docker container ps` and check for your container's 
 docker container stop beloved_noyce
 ```
 
+To start the development containers you would do the same thing, only difference is that now you should specify the dockerfile to be `dev.Dockerfile`:
+```bash
+docker build -t forum-front-dev --file dev.Dockerfile .
+docker run -d -p [your desired port]:80 forum-front-dev
+```
+
 # ForumClient
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
