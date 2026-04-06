@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Backend/ForumAPI/ForumAPI
-    
+        working-directory: Backend/ForumAPI
+
     steps:
       - uses: actions/checkout@v4
 
@@ -22,10 +22,10 @@ jobs:
           dotnet-version: 10.0.x
 
       - name: Restore dependencies
-        run: dotnet restore ForumAPI.csproj
+        run: dotnet restore
 
       - name: Build
-        run: dotnet build ForumAPI.csproj --no-restore
+        run: dotnet build --no-restore
 
       - name: Test
-        run: dotnet test ForumAPI.csproj --no-build --verbosity normal
+        run: dotnet test UnitTests --no-build --verbosity normal
