@@ -28,4 +28,4 @@ jobs:
         run: dotnet build ForumAPI/ForumAPI.csproj --no-restore
 
       - name: Test
-        run: dotnet test ForumAPI/UnitTests/UnitTests.csproj --no-build --verbosity normal
+        run: dotnet test UnitTests --no-build --verbosity normal
