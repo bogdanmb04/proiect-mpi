@@ -1,0 +1,14 @@
+@if(comment(); as comment)
+{
+<div class="comment">
+  <div class="comment-header">
+    <div class="user-info">
+      <img [src]="'data:image/png;base64,' + comment.userIcon" alt="User icon" class="user-icon" />
+      <span class="username">{{ comment.username }}</span>
+    </div>
+  </div>
+  <div class="comment-body">
+    {{ comment.commentText }}
+  </div>
+</div>
+}
