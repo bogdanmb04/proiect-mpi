@@ -1,0 +1,23 @@
+<div class="carousel" tabindex="0" role="region" aria-label="Image carousel" (keydown)="onKeydown($event)"
+  (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+
+  @if (filteredImages().length) {
+  <div class="viewport">
+    @if (filteredImages()!.length > 1) {
+    <button type="button" class="nav prev" (click)="prev()" aria-label="Previous image">‹</button>
+    }
+
+    <img class="image" [src]="getImageDataUrl(filteredImages()![currentIndex()])" alt="Post image" />
+
+    @if (filteredImages()!.length > 1) {
+    <button type="button" class="nav next" (click)="next()" aria-label="Next image">›</button>
+    }
+
+    @if (filteredImages()!.length > 1) {
+    <div class="counter" aria-live="polite">
+      {{ currentIndex() + 1 }} / {{ filteredImages()!.length }}
+    </div>
+    }
+  </div>
+  }
+</div>

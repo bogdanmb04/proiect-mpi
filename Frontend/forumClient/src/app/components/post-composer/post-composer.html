@@ -1,0 +1,54 @@
+<div class="composer">
+  <div class="composer-header">
+    <h2>Write something cool!!</h2>
+  </div>
+
+  <form class="composer-form" (submit)="submitPost()">
+    <div class="field">
+      <label for="category">Category</label>
+      <select id="category" [ngModel]="selectedCategoryId()" (ngModelChange)="selectedCategoryId.set($event)"
+        name="category" required>
+        <option [ngValue]="null" disabled>Select category</option>
+        @for (category of categories(); track category.categoryId) {
+        <option [ngValue]="category.categoryId">{{ category.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="title">Title</label>
+      <input id="title" type="text" [ngModel]="title()" (ngModelChange)="title.set($event)" name="title"
+        placeholder="Give your post a title" required />
+    </div>
+
+    <div class="field">
+      <label for="content">Your post</label>
+      <textarea id="content" rows="4" [ngModel]="body()" (ngModelChange)="body.set($event)" name="body"
+        placeholder="What's on your mind?" required></textarea>
+    </div>
+
+    <div class="field">
+      <label for="images">Images</label>
+      <input id="images" type="file" accept="image/*" (change)="onFileSelected($event)" multiple />
+      @if (images().length) {
+      <small class="hint">{{ images().length }} image{{ images().length === 1 ? '' : 's' }} selected</small>
+      } @else {
+      <small class="hint">PNG, JPG up to a few MB each.</small>
+      }
+    </div>
+
+    @if(images().length) {
+    <div class="image-grid">
+      @for (img of images(); track img.base64) {
+      <div class="image-item">
+        <img [src]="'data:image/*;base64,' + img.base64" alt="preview" />
+        <button type="button" class="remove" (click)="removeImage($index)">Remove</button>
+      </div>
+      }
+    </div>
+    }
+    <div class="actions">
+      <button type="submit" class="primary" [disabled]="!selectedCategoryId() || !title().trim()">Post</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,77 @@
+<article class="post-preview">
+  <div class="post-header">
+    <div class="user-info">
+      @if (userIcon()) {
+      <img [src]="getImageDataUrl(userIcon() || '')" [alt]="username()" class="user-avatar" />
+      } @else {
+      <div class="user-avatar placeholder"></div>
+      }
+      <div class="user-details">
+        <a [routerLink]="'/profile/' + userId()" class="username">
+          {{ username() }}
+        </a>
+        <time class="date">{{ formatDate(date()) }}</time>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="category-badge">{{ category() }}</span>
+      @if (auth.user) {
+      <div class="menu">
+        <button class="menu-button" (click)="toggleMenu()" aria-label="Post actions">⋯</button>
+        @if (menuOpen()) {
+        <div class="dropdown">
+          @if (canEdit()) {
+          <button class="dropdown-item" (click)="editPost()">Edit post</button>
+          } @else {
+          <div class="dropdown-item disabled" title="only owner or admin can edit">Edit post</div>
+          }
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="post-content">
+    <h3 class="title">{{ title() }}</h3>
+    <p class="body">{{ body() }}</p>
+  </div>
+
+  @if (images()?.length ?? 0 > 0) {
+  <div class="images-container">
+    <app-image-carousel [images]="images()" />
+  </div>
+  }
+
+  <div class="post-footer">
+    <div class="post-stats">
+      <span class="stat">
+        <span class="icon" [class.liked]="isLiked()" (click)="toggleLike()">
+          @if (isLiked()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+          </svg>
+          } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
+            viewBox="0 0 16 16">
+            <path
+              d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+          </svg>
+          }
+        </span>
+        {{ likeCount() }}
+      </span>
+      <span class="stat">
+        <span class="icon" (click)="goToPost()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right"
+            viewBox="0 0 16 16">
+            <path
+              d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
+          </svg>
+        </span>
+        {{ commentNo() }}
+      </span>
+    </div>
+  </div>
+</article>
