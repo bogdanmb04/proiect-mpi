@@ -1,5 +1,4 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { PostStream } from '../post-stream/post-stream';
 import { PostsService } from '../../services/posts-service';
 import { PostDTO } from '../../models/post.model';

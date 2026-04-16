@@ -1,4 +1,4 @@
-import { Component, input, signal, effect, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { CommentSection } from '../comment-section/comment-section';

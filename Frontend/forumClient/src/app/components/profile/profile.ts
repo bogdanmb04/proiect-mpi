@@ -1,6 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { User } from '../../models/user.model';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication-service';
