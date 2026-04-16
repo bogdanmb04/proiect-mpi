@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { PostStream } from '../post-stream/post-stream';
 import { PostsService } from '../../services/posts-service';
 import { PostDTO } from '../../models/post.model';
-import { PostComposer } from "../post-composer/post-composer";
+import { PostComposer } from '../post-composer/post-composer';
 
 @Component({
   selector: 'app-home',

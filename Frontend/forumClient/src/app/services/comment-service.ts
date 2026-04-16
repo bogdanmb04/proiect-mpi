@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
 import { CommentDTO } from '../models/comment.model';
@@ -8,8 +8,7 @@ import { CommentDTO } from '../models/comment.model';
 })
 export class CommentService {
   private api = environment.postsApi;
-
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   getComments(postId: number) {
     return this.http.get<CommentDTO[]>(`${this.api}/comments/${postId}`, {

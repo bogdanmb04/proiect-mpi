@@ -1,7 +1,7 @@
 import { Component, input, signal, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { CommentSection } from "../comment-section/comment-section";
+import { CommentSection } from '../comment-section/comment-section';
 import { PostDTO } from '../../models/post.model';
 import { PostsService } from '../../services/posts-service';
 import { AuthenticationService } from '../../services/authentication-service';
@@ -58,9 +58,6 @@ export class Post implements OnInit {
         this.isLoading.set(false);
       }
     });
-  }
-
-  constructor() {
   }
 
   formatDate(date: Date | string | undefined): string {

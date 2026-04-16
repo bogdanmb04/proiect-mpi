@@ -34,6 +34,7 @@
 
         @if (existingImages().length) {
         <div class="field">
+            <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
             <label>Current Images</label>
             <div class="image-grid">
                 @for (img of existingImages(); track $index) {
