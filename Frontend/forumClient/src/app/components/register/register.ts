@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators, FormGroup, FormControl } from '@angular/forms';
 import { passwordMatchValidator } from '../../validators/password-confirm';
-import { UserService } from '../../services/user-service';
 import { Router } from '@angular/router';
 import { RegisterDTO } from '../../models/register.model';
 import { HttpResponse } from '@angular/common/http';
@@ -16,7 +15,7 @@ import { AuthenticationService } from '../../services/authentication-service';
 export class Register {
   authService = inject(AuthenticationService);
   router = inject(Router);
-  errorMessage: string = '';
+  errorMessage = '';
 
   registerForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),

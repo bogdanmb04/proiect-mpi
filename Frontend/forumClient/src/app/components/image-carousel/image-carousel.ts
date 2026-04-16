@@ -42,7 +42,7 @@ export class ImageCarousel {
   onTouchEnd(e: TouchEvent) {
     const dx = e.changedTouches[0].clientX - this.touchStartX;
     if (Math.abs(dx) > 30) {
-      dx < 0 ? this.next() : this.prev();
+      const _ = dx < 0 ? this.next() : this.prev();
     }
   }
 

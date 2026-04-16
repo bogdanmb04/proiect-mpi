@@ -97,7 +97,7 @@ export class PostComposer implements OnInit {
     console.log('Submitting DTO:', dto);
 
     this.postsService.createPost(dto).subscribe({
-      next: (response) => {
+      next: (_response) => {
         this.title.set('');
         this.body.set('');
         this.selectedCategoryId.set(null);

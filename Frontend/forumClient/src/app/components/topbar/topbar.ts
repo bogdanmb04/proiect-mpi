@@ -20,7 +20,7 @@ export class Topbar {
           this.router.navigate(['/login']);
         }
       },
-      error: (err) => {
+      error: (_err) => {
         this.authService.logout();
         this.router.navigate(['/login']);
       }

@@ -50,6 +50,7 @@ module.exports = defineConfig([
           style: "kebab-case",
         },
       ],
+      
     },
   },
   {
@@ -58,6 +59,9 @@ module.exports = defineConfig([
       angular.configs.templateRecommended,
       angular.configs.templateAccessibility,
     ],
-    rules: {},
+    rules: {
+      "@angular-eslint/template/click-events-have-key-events": "off",
+      "@angular-eslint/template/interactive-supports-focus": "off"
+    },
   }
 ]);

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ImageCarousel } from '../image-carousel/image-carousel';
 import { PostsService } from '../../services/posts-service';
 import { AuthenticationService } from '../../services/authentication-service';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-preview',
