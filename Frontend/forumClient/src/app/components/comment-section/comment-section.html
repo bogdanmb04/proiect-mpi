@@ -1,1 +1,40 @@
-<p>comment-section works!</p>
+<div class="comment-section">
+  <h3>Comments</h3>
+
+  @if(error(); as error )
+  {
+  <div class="error-message">
+    {{ error }}
+  </div>
+  }
+
+  <div class="add-comment-form">
+    <textarea [(ngModel)]="newCommentText" placeholder="Write your comment..." class="comment-input"
+      [disabled]="isLoading()"></textarea>
+    <button (click)="addComment()" class="submit-button" [disabled]="isLoading() || !newCommentText()">
+      {{ isLoading() ? 'Posting...' : 'Post Comment' }}
+    </button>
+  </div>
+
+  @if(isLoading() && comments().length > 0)
+  {
+  <div class="loading">
+    Loading comments...
+  </div>
+  }
+
+  <div class="comments-list">
+    @if(comments().length === 0 && isLoading())
+    {
+    <div class="no-comments">
+      No comments yet. Be the first to comment!
+    </div>
+    } @else {
+
+    @for(comment of comments(); track comment)
+    {
+    <app-comment [comment]="comment"></app-comment>
+    }
+    }
+  </div>
+</div>

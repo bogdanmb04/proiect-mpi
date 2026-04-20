@@ -1,11 +1,11 @@
 import { Component, inject, input, effect, signal } from '@angular/core';
 import { PostsService } from '../../services/posts-service';
 import { PostDTO } from '../../models/post.model';
-//import { PostPreview } from '../post-preview/post-preview';
+import { PostPreview } from '../post-preview/post-preview';
 
 @Component({
   selector: 'app-post-stream',
-  //imports: [PostPreview],
+  imports: [PostPreview],
   templateUrl: './post-stream.html',
   styleUrl: './post-stream.scss',
 })
