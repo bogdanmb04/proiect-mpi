@@ -5,11 +5,11 @@
   <div class="empty-message">No posts yet</div>
   } @else {
   @for (post of displayPosts(); track post.postId) {
-  <!-- <div class="post-item">
+  <div class="post-item">
     <app-post-preview [userId]="post.userId" [userIcon]="post.userIcon" [username]="post.username"
       [postId]="post.postId" [title]="post.title" [date]="post.date" [body]="post.body" [category]="post.category"
       [images]="post.images" [likeNo]="post.likeNo" [commentNo]="post.commentNo" />
-  </div> -->
+  </div>
   }
   }
 </div>
