@@ -1,6 +1,6 @@
-import { Component, signal, inject, effect } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Topbar } from "./components/topbar/topbar";
+import { Topbar } from './components/topbar/topbar';
 import { AuthenticationService } from './services/authentication-service';
 
 @Component({

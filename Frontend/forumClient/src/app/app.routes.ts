@@ -4,8 +4,8 @@ import { Login } from './components/login/login';
 import { Home } from './components/home/home';
 import { ProfilePage } from './components/profile-page/profile-page';
 import { EditProfile } from './components/edit-profile/edit-profile';
-import { Post } from "./components/post/post";
-import { EditPost } from "./components/edit-post/edit-post";
+import { Post } from './components/post/post';
+import { EditPost } from './components/edit-post/edit-post';
 
 export const routes: Routes = [
   {
