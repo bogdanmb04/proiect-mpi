@@ -1,7 +1,6 @@
 using ForumAPI.DataContext;
 using ForumAPI.Handlers;
 using ForumAPI.Models;
-using ForumAPI.Migrations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +22,25 @@ builder.Services.AddSwaggerGen();
 
 string angularCorsPolicy = "AngularCorsPolicy";
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(angularCorsPolicy, policy =>
-//     {
-//         policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
-//               .AllowAnyHeader()
-//               .AllowCredentials();
-//     });
-// });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(angularCorsPolicy, policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "https://localhost:4200",
+                "http://localhost:7151",
+                "http://localhost:80"
+                )
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+        
+        // policy.AllowAnyOrigin()
+        //     .AllowAnyHeader()
+        //     .AllowAnyMethod();
+    });
+});
 
 #endregion
 
@@ -106,7 +115,7 @@ builder.Services.AddAuthorization(options =>
 #region Database Settings
 
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("ForumContext"));
-// dataSourceBuilder.MapEnum<Role>("role");
+dataSourceBuilder.MapEnum<Role>("role");
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddDbContext<ForumContext>(options
@@ -128,12 +137,12 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ForumContext>();
-    await db.Database.MigrateAsync();
+    db.Database.EnsureCreated();
 }
 
 app.UseHttpsRedirection();
 
-// app.UseCors(angularCorsPolicy);
+app.UseCors(angularCorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
