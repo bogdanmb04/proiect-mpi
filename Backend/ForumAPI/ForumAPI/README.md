@@ -1,5 +1,5 @@
 # Forum API
-## Setup
+## Setup (no env vars)
 Provide a connection string in either `appsettings.json` or `appsettings.Development.json`, depending on if you start the API in production or development mode:
 
 ```json
@@ -61,3 +61,4 @@ This will map port 8080 of the container to accept requests from port 5000. Make
 permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
 ```
 An easy solution is to run each Docker command in sudo mode, however it might not be ideal. Make sure your Docker process is properly started.
+
