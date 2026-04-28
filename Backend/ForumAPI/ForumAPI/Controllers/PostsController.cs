@@ -283,7 +283,7 @@ namespace ForumAPI.Controllers
             {
                 User = user,
                 Category = c,
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
                 Title = post.Title!,
                 Body = post.Body
             };

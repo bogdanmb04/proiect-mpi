@@ -3,6 +3,7 @@ using ForumAPI.Handlers;
 using ForumAPI.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
@@ -30,7 +31,9 @@ builder.Services.AddCors(options =>
                 "http://localhost:4200",
                 "https://localhost:4200",
                 "http://localhost:7151",
-                "http://localhost:80"
+                "http://localhost:80",
+                "https://app.very-awesome-forum-app.uk",
+                "https://api.very-awesome-forum-app.uk"
                 )
               .AllowAnyHeader()
               .AllowAnyMethod()
@@ -134,9 +137,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors(angularCorsPolicy);
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+        var feature = context.Features.Get<IExceptionHandlerFeature>();
+        if (feature?.Error != null)
+            logger.LogError(feature.Error, "Unhandled exception");
+
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("{\"error\":\"An internal error occurred\"}");
+    });
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
