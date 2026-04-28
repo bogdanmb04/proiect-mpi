@@ -41,6 +41,8 @@ services:
     build:
       context: ./Frontend/forumClient
       dockerfile: Dockerfile
+      args:
+        API_URL: ${FRONTEND_API_URL:-https://api.very-awesome-forum-app.uk}
     ports:
       - "4200:80"
     container_name: forum-front-container
