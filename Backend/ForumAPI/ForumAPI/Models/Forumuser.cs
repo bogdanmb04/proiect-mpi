@@ -33,7 +33,7 @@ public partial class Forumuser
     [Column("icon")]
     public byte[]? Icon { get; set; }
 
-    [Column("role")]
+    [Column("role", TypeName = "role")]
     public Role Role { get; set; }
 
     [InverseProperty("Followee")]

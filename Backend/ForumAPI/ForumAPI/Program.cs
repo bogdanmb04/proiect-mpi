@@ -134,12 +134,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ForumContext>();
-    db.Database.EnsureCreated();
-}
-
 app.UseHttpsRedirection();
 
 app.UseCors(angularCorsPolicy);
