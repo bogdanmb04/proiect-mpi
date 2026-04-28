@@ -26,9 +26,19 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(angularCorsPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "https://localhost:4200",
+                "http://localhost:7151",
+                "http://localhost:80"
+                )
               .AllowAnyHeader()
+              .AllowAnyMethod()
               .AllowCredentials();
+        
+        // policy.AllowAnyOrigin()
+        //     .AllowAnyHeader()
+        //     .AllowAnyMethod();
     });
 });
 
